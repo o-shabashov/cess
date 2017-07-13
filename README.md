@@ -1,5 +1,7 @@
 # Check External Service'S
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/o-shabashov/cess?branch=master)](https://bettercodehub.com/)
+
 Checking external services, whether they are alive or not.
 
 ## TL;DR
