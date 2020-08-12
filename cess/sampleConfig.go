@@ -17,8 +17,7 @@ const SampleConfig = `{
       "username": "db_user",
       "password": "db_password",
       "port": "3306"
-    },
-
+    }
   ],
   "api": [
     {

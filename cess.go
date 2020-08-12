@@ -50,7 +50,11 @@ func GetConfig() (config cess.Config) {
 	jsonRaw, er := ioutil.ReadFile(configFile)
 	CheckError(er, logger)
 	CheckError(json.Unmarshal(jsonRaw, &config), logger)
-	log.Info("JSON config file - OK")
+
+	if er == nil {
+		log.Info("JSON config file - OK")
+	}
+
 	return
 }
 
@@ -62,7 +66,6 @@ func GetDBConnection(db cess.Database) *sql.DB {
 	dbConnect, err := sql.Open(db.Engine, dbUrl)
 	CheckError(err, logger)
 
-	logger.Info("DB connection - OK")
 	return dbConnect
 }
 
@@ -72,7 +75,10 @@ func TestDatabase(db cess.Database, wg *sync.WaitGroup) {
 	dbConnect := GetDBConnection(db)
 	_, err := dbConnect.Query("SHOW TABLES")
 	CheckError(err, logger)
-	logger.Info("Test DB query - OK")
+
+	if err == nil {
+		logger.Info("Test DB query - OK")
+	}
 
 	wg.Done()
 }
@@ -96,6 +102,11 @@ func TestApi(api cess.Api, wg *sync.WaitGroup) {
 
 	resp, err := http.DefaultClient.Do(req)
 	CheckError(err, logger)
+
+	if resp == nil {
+		wg.Done()
+		return
+	}
 
 	if resp.StatusCode != 200 {
 		body, _ := ioutil.ReadAll(resp.Body)
